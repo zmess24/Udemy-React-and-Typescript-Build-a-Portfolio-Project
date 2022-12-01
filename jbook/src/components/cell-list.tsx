@@ -1,5 +1,6 @@
 import { useTypedSelector } from "../hooks/use-typed-selector";
 import CellListItem from "./cell-list-item";
+import ActionBar from "./action-bar";
 
 const CellList: React.FC = () => {
 	const cells = useTypedSelector(({ cells: { order, data } }) =>
