@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { useTypedSelector } from "../hooks/use-typed-selector";
+import useTypedSelector from "../hooks/use-typed-selector";
 import CellListItem from "./cell-list-item";
 import AddCell from "./add-cell";
 
