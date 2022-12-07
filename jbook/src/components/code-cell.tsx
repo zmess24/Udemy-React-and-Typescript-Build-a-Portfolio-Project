@@ -19,7 +19,13 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 		const { data, order } = state.cells;
 		const orderdedCells = order.map((id) => data[id]);
 
-		const cumultiveCode = [];
+		const cumultiveCode = [
+			`
+        const show = (value) => {
+          document.querySelector('#root').innerHTML = value;
+        }
+      `,
+		];
 		for (let c of orderdedCells) {
 			if (c.type === "code") {
 				cumultiveCode.push(c.content);
@@ -30,26 +36,24 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 			}
 		}
 
-		console.log(cumultiveCode);
-
 		return cumultiveCode;
 	});
 
 	useEffect(() => {
 		if (!bundle) {
-			createBundle(cell.id, cell.content);
+			createBundle(cell.id, cumultiveCode.join("\n"));
 			return;
 		}
 
 		const timer = setTimeout(async () => {
-			createBundle(cell.id, cell.content);
+			createBundle(cell.id, cumultiveCode.join("\n"));
 		}, 750);
 
 		return () => {
 			clearTimeout(timer);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [cell.content, cell.id, createBundle]);
+	}, [cumultiveCode.join("\n"), cell.id, createBundle]);
 
 	return (
 		<Resizable direction="vertical">
